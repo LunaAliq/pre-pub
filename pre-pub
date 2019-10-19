@@ -39,7 +39,7 @@ def convert_block_to_prt(blk):
                 ret += "\n\n"
                 prev_nl = True
             else:
-                if line.startswith("「"):
+                if line.startswith("「") and line.endswith("」"):
                     ret += "  \n"
                 elif not prev_nl:
                     ret += "  \n"
@@ -56,7 +56,7 @@ def convert_block_to_pub(blk):
 
     lines = blk.split("\n")
     for line in lines:
-        if line.startswith("「"):
+        if line.startswith("「") and line.endswith("」"):
             first = False
             if ret != "":
                 ret += "\n"
@@ -86,8 +86,6 @@ def convert(src):
             pub += "\n\n"
         prt += "\n\n".join(prt_blocks)
         pub += "\n\n<p><br /></p>\n\n".join(pub_blocks)
-    prt = prt.replace("\\「", "「")
-    pub = pub.replace("\\「", "「")
     return (prt, pub)
 
 def main(input_file, output_name):
